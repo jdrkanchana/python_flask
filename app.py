@@ -32,9 +32,9 @@ except mariadb.Error as e:
 # Get Cursor
 cur = conn.cursor()
 
-@app.route("/")
-def hello():
-    return "Hello, I love Digital Ocean!"
+@app.route("/index")
+def index():
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
