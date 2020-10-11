@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request
+from flask import Flask,render_template, request,redirect
 #import mysql.connector
 import mariadb
 
@@ -62,8 +62,10 @@ def signup():
                 cur.execute("INSERT into register_theuser(email,username,password) values(%s,%s,%s)",(email,username,password,))
                 conn.commit()
                 flash("Successfully registered","success")
+                return render_template('index.html')
             except:
-                flash("Username or email already exists.Please try again","warning")
+                flash("Username or email already exists.Please try again","danger")
+                return render_template('signup.html')
 
     #user = User.query.filter_by(email=email).first() to search is user there
         #new_user = User(email=email, name=name, password=password)
@@ -85,8 +87,12 @@ def login():
                     email_exists=1
             
         if(email_exists==1):
-            flash("Successfully registered","success")
+            flash("Successfully logged in","success")
             return render_template('index.html')
+        else:
+            flash("Incorrect username or password","danger")
+            flash("Please check your login details and try again.","danger")
+            return render_template('login.html')
    
     return render_template('login.html')
 #conn.close()
